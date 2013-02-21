@@ -7,6 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'clang-complete'
 Bundle 'vim-scripts/molokai'
+"Bundle 'klen/python-mode'
 Bundle 'git://github.com/ervandew/supertab.git'
 Bundle 'git://github.com/wikitopian/hardmode.git'
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
@@ -83,6 +84,7 @@ nnoremap K :Man <cword><CR>
 nnoremap <Space> za
 
 nmap <silent> <leader>s :set spell!<CR>
+nmap <silent> <leader>l :set list!<CR>
 
 function! s:insert_gates()
     let gname = substitute(toupper(expand("%:t")), "\\.", "_", "g")
@@ -173,8 +175,9 @@ if has('gui_running')
     colorscheme solarized
     set background=light
     set guioptions=
-    set guifont=Liberation\ Mono\ 18
-    let g:solarized_termcolors=256
+    "set guifont=Liberation\ Mono\ 18
+    set guifont=Inconsolata\ 18
+    "let g:solarized_termcolors=256
 else
     set t_Co=256
     set background=dark
