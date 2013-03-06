@@ -19,6 +19,7 @@ Bundle 'git://github.com/troydm/easybuffer.vim.git'
 Bundle 'git://github.com/tpope/vim-fugitive.git'
 Bundle 'git://github.com/tpope/vim-surround.git'
 Bundle 'git://github.com/tpope/vim-unimpaired.git'
+Bundle 'git://github.com/tpope/vim-repeat.git'
 nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
@@ -109,7 +110,7 @@ if has("autocmd")
     autocmd BufNewFile *.html :0r ~/.vim/templates/template.html | :call cursor(5,12) "| startinsert
     autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
     autocmd BufNewFile *.py :0r ~/.vim/templates/template.py | :call cursor(4,1)
-    autocmd BufNewFile {makefile,Makefile} :0r ~/.vimi/templates/template.make
+    autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make
 
     autocmd! bufwritepost .vimrc source $MYVIMRC
     "au BufNewFile,BufRead *.cpp set syntax=cpp11
@@ -172,16 +173,15 @@ set tags+=~/.vim/tags/gl
 map <F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 if has('gui_running')
-    colorscheme solarized
     set background=light
     set guioptions=
-    "set guifont=Liberation\ Mono\ 18
-    set guifont=Inconsolata\ 18
-    "let g:solarized_termcolors=256
+    set guifont=Droid\ Sans\ Mono\ 16
+    colorscheme solarized
 else
     set t_Co=256
-    set background=dark
-    colorscheme molokai
+    set background=light
+    let g:solarized_termcolors=256
+    colorscheme solarized
 endif
 
 inoremap <Up> <NOP>
