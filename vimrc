@@ -5,9 +5,10 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'LaTeX-Box'
 Bundle 'clang-complete'
 Bundle 'vim-scripts/molokai'
-"Bundle 'klen/python-mode'
 Bundle 'git://github.com/ervandew/supertab.git'
 Bundle 'git://github.com/wikitopian/hardmode.git'
 Bundle 'git://github.com/altercation/vim-colors-solarized.git'
@@ -55,6 +56,8 @@ if version >= 703
 end
 syntax enable
 
+let g:LatexBox_latexmk_options = "-pvc -pdfps"
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 let g:clang_user_options='|| exit 0'
 let mapleader = ","
 
@@ -71,6 +74,7 @@ endfunction
 nnoremap <leader>m :call ToggleMouse()<CR>
 
 set pastetoggle=<leader>p
+set clipboard=unnamedplus " http://vim.wikia.com/wiki/Accessing_the_system_clipboard
 
 function! Replace()
     let s:word = input("Replace " . expand('<cword>') . " with:")
@@ -100,6 +104,10 @@ endfunction
 set ts=4 sts=4 sw=4 et
 
 if has("autocmd")
+
+    au FileType tex exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
+    set complete+=k
+    au FileType python setlocal ts=4 sts=4 sw=4 et
     au FileType make setlocal ts=8 sts=8 sw=8 noet
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType html setlocal ts=2 sts=2 sw=2 et
