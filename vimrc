@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'abolish.vim'
 Bundle 'gmarik/vundle'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'LaTeX-Box'
@@ -101,19 +102,25 @@ function! s:insert_gates()
     normal! ki
 endfunction
 
-set ts=4 sts=4 sw=4 et
+set ts=4 sts=4 sw=4 noet
 
 if has("autocmd")
-
     au FileType tex exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
     set complete+=k
     au FileType python setlocal ts=4 sts=4 sw=4 et
+    au FileType c setlocal ts=4 sts=4 sw=4 et
     au FileType make setlocal ts=8 sts=8 sw=8 noet
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType html setlocal ts=2 sts=2 sw=2 et
     au FileType css setlocal ts=2 sts=2 sw=2 et
 
     au BufNewFile,BufRead *.go set filetype=go syntax=go
+	au BufRead,BufNewFile *.rc set filetype=rc 
+    autocmd BufNewFile,BufRead profile,wmsetup setf infsh
+    autocmd BufNewFile,BufRead * if getline(1) =~ '^#!/dis/sh' || getline(1) =~ '^load ' || getline(2) =~ '^load ' | setlocal ft=infsh | endif
+ 
+    autocmd BufNewFile,BufRead mk*          if expand("<afile>") !~ '\.' | setf mkfile | endif
+    autocmd BufNewFile,BufRead *.[bm]          setf limbo
 
     autocmd BufNewFile *.html :0r ~/.vim/templates/template.html | :call cursor(5,12) "| startinsert
     autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()

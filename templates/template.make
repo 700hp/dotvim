@@ -1,15 +1,10 @@
-CC := gcc
-CFLAGS := -Wall -Werror -Wextra -pedantic -O3
-LDFLAGS := 
-
 PROG := main
-OBJS := main.o
 
-all: $(PROG)
+all: build
 
-$(PROG): $(OBJS)
+build: $(PROG)
 
 clean:
-	rm -rf $(PROG) $(OBJS)
+	rm -rf $(PROG)
 
 .PHONY: all clean
