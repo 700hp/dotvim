@@ -6,9 +6,6 @@ call vundle#rc()
 
 Bundle 'abolish.vim'
 Bundle 'gmarik/vundle'
-Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'LaTeX-Box'
-Bundle 'clang-complete'
 Bundle 'vim-scripts/molokai'
 Bundle 'git://github.com/ervandew/supertab.git'
 Bundle 'git://github.com/wikitopian/hardmode.git'
