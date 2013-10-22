@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'itchyny/lightline.vim'
 Bundle 'abolish.vim'
 Bundle 'gmarik/vundle'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
@@ -163,25 +164,6 @@ function! CurDir()
     return expand('%:p:h:t')
 endfunction
 
-set laststatus=2
-set statusline=\ 
-set statusline+=%n:\                 " buffer number
-set statusline+=%t                   " filename with full path
-set statusline+=%m                   " modified flag
-set statusline+=\ \ 
-set statusline+=%{fugitive#statusline()}
-set statusline+=\ \ 
-set statusline+=%{&paste?'[paste]\ ':''}
-set statusline+=%{&fileencoding}
-set statusline+=\ \ %Y               " type of file
-set statusline+=\ %3.3(%c%)          " column number
-set statusline+=\ \ %3.12(%l/%L%)     " line / total lines
-set statusline+=\ \ %{FileSize()}
-set statusline+=%<                   " where truncate if line too long
-set statusline+=\ \ %{tagbar#currenttag('[%s]\ ','')}
-set statusline+=\ \ Dir:%{CurDir()}
-
-
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/tags/gl
 " build tags of your own project with F12
@@ -227,3 +209,24 @@ endif
 
 set clipboard=unnamedplus
 nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': '>', 'right': '<' },
+      \ 'subseparator': { 'left': '|>', 'right': '<|' }
+      \ }
+nmap <leader>e :EasyBufferToggle<CR>
