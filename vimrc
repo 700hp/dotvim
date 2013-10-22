@@ -4,22 +4,24 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'LaTeX-Box'
+Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'itchyny/lightline.vim'
-Bundle 'abolish.vim'
 Bundle 'gmarik/vundle'
 Bundle 'vim-scripts/molokai'
-Bundle 'git://github.com/ervandew/supertab.git'
-Bundle 'git://github.com/wikitopian/hardmode.git'
-Bundle 'git://github.com/altercation/vim-colors-solarized.git'
-Bundle 'git://github.com/scrooloose/nerdtree.git'
-Bundle 'git://github.com/scrooloose/nerdcommenter.git'
-Bundle 'git://github.com/majutsushi/tagbar'
-Bundle 'git://github.com/mileszs/ack.vim.git'
-Bundle 'git://github.com/troydm/easybuffer.vim.git'
-Bundle 'git://github.com/tpope/vim-fugitive.git'
-Bundle 'git://github.com/tpope/vim-surround.git'
-Bundle 'git://github.com/tpope/vim-unimpaired.git'
-Bundle 'git://github.com/tpope/vim-repeat.git'
+Bundle 'ervandew/supertab.git'
+Bundle 'wikitopian/hardmode.git'
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'scrooloose/nerdtree.git'
+Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'majutsushi/tagbar'
+Bundle 'mileszs/ack.vim.git'
+Bundle 'troydm/easybuffer.vim.git'
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'tpope/vim-unimpaired.git'
+Bundle 'tpope/vim-repeat.git'
 nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
@@ -125,6 +127,8 @@ if has("autocmd")
     autocmd BufNewFile *.py :0r ~/.vim/templates/template.py | :call cursor(4,1)
     autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make
 
+	autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+
     autocmd! bufwritepost .vimrc source $MYVIMRC
     "au BufNewFile,BufRead *.cpp set syntax=cpp11
     "let c_no_curly_error=1
@@ -177,19 +181,6 @@ else
     let g:solarized_termcolors=256
     colorscheme solarized
 endif
-
-inoremap <Up> <NOP>
-inoremap <Down> <NOP>
-inoremap <Left> <NOP>
-inoremap <Right> <NOP>
-vnoremap <Up> <NOP>
-vnoremap <Down> <NOP>
-vnoremap <Left> <NOP>
-vnoremap <Right> <NOP>
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
 
 if has("cscope")
     set csprg=/usr/bin/cscope
