@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'itchyny/lightline.vim'
 Bundle 'abolish.vim'
 Bundle 'gmarik/vundle'
 Bundle 'vim-scripts/molokai'
@@ -142,7 +143,7 @@ inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<CR> (<CR>)<Esc>ko
 inoremap [<CR> [<CR>]<Esc>ko
 
-nmap <F8> :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 
 function! FileSize()
     let bytes = getfsize(expand("%:p"))
@@ -157,27 +158,8 @@ function! FileSize()
 endfunction
 
 function! CurDir()
-    return expand('%:p:~')
+    return expand('%:p:h:t')
 endfunction
-
-set laststatus=2
-set statusline=\ 
-set statusline+=%n:\                 " buffer number
-set statusline+=%t                   " filename with full path
-set statusline+=%m                   " modified flag
-set statusline+=\ \ 
-"set statusline+=%{tagbar#currenttag('[%s]\ ','')}
-set statusline+=%{fugitive#statusline()}
-set statusline+=\ \ 
-set statusline+=%{&paste?'[paste]\ ':''}
-set statusline+=%{&fileencoding}
-set statusline+=\ \ %Y               " type of file
-set statusline+=\ %3.3(%c%)          " column number
-set statusline+=\ \ %3.9(%l/%L%)     " line / total lines
-"set statusline+=\ \ %2.3p%%          " percentage through file in lines
-set statusline+=\ \ %{FileSize()}
-set statusline+=%<                   " where truncate if line too long
-set statusline+=\ \ Dir:%{CurDir()}
 
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/tags/gl
@@ -187,7 +169,7 @@ map <F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 if has('gui_running')
     set background=light
     set guioptions=
-    set guifont=Droid\ Sans\ Mono\ 16
+    set guifont=Droid\ Sans\ Mono\ 13
     colorscheme solarized
 else
     set t_Co=256
@@ -221,3 +203,27 @@ if has("cscope")
     endif
     set csverb
 endif
+
+set clipboard=unnamedplus
+nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': '>', 'right': '<' },
+      \ 'subseparator': { 'left': '|>', 'right': '<|' }
+      \ }
+nmap <leader>e :EasyBufferToggle<CR>
