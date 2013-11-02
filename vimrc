@@ -4,12 +4,12 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'sjl/gundo.vim'
 Bundle 'LaTeX-Box'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'itchyny/lightline.vim'
 Bundle 'gmarik/vundle'
 Bundle 'vim-scripts/molokai'
-Bundle 'ervandew/supertab.git'
 Bundle 'wikitopian/hardmode.git'
 Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'scrooloose/nerdtree.git'
@@ -22,12 +22,13 @@ Bundle 'tpope/vim-fugitive.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tpope/vim-repeat.git'
+Bundle 'Valloric/YouCompleteMe'
 nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-Bundle 'git://github.com/scrooloose/syntastic.git'
+Bundle 'scrooloose/syntastic.git'
 
 filetype plugin indent on
 runtime ftplugin/man.vim
@@ -89,7 +90,7 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap K :Man <cword><CR>
 nnoremap <Space> za
 
-nmap <silent> <leader>s :set spell!<CR>
+nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
 
 function! s:insert_gates()
@@ -109,10 +110,13 @@ if has("autocmd")
     set complete+=k
     au FileType python setlocal ts=4 sts=4 sw=4 et
     au FileType c setlocal ts=4 sts=4 sw=4 et
+    au FileType cpp setlocal ts=4 sts=4 sw=4 et
     au FileType make setlocal ts=8 sts=8 sw=8 noet
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
     au FileType html setlocal ts=2 sts=2 sw=2 et
     au FileType css setlocal ts=2 sts=2 sw=2 et
+    au FileType javascript setlocal ts=2 sts=2 sw=2 et
+    au FileType no-ft setlocal ts=2 sts=2 sw=2 et
 
     au BufNewFile,BufRead *.go set filetype=go syntax=go
 	au BufRead,BufNewFile *.rc set filetype=rc 
@@ -147,7 +151,7 @@ inoremap {<CR> {<CR>}<Esc>ko
 inoremap (<CR> (<CR>)<Esc>ko
 inoremap [<CR> [<CR>]<Esc>ko
 
-nmap <leader>t :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR><C-w><C-w>
 
 function! FileSize()
     let bytes = getfsize(expand("%:p"))
@@ -218,3 +222,4 @@ let g:lightline = {
       \ 'subseparator': { 'left': '|>', 'right': '<|' }
       \ }
 nmap <leader>e :EasyBufferToggle<CR>
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
