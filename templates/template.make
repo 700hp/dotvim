@@ -1,6 +1,7 @@
 CC := gcc
 MKDIR := mkdir -p
 CFLAGS := -Wall -Werror -Wextra -pedantic
+LDFLAGS := 
 PROGS := bin/main
 OBJS := $(patsubst src/%.c,obj/%.o, $(wildcard src/*.c))
 
