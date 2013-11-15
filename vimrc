@@ -165,12 +165,13 @@ function! FileSize()
     endif
 endfunction
 
-if getfsize(expand("%:p")) > 500 * 1024 
+if getfsize(expand("%:p")) > 100 * 1024
+	set ttyfast 
+	set ttyscroll=3
+	set lazyredraw 
+	set synmaxcol=128
+elseif getfsize(expand("%:p")) > 500 * 1024 
 	syntax off
-	"set ttyfast 
-	"set ttyscroll=3
-	"set lazyredraw 
-	"set synmaxcol=128
 endif
 
 function! CurDir()
