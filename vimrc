@@ -165,6 +165,14 @@ function! FileSize()
     endif
 endfunction
 
+if getfsize(expand("%:p")) > 500 * 1024 
+	syntax off
+	"set ttyfast 
+	"set ttyscroll=3
+	"set lazyredraw 
+	"set synmaxcol=128
+endif
+
 function! CurDir()
     return expand('%:p:h:t')
 endfunction
