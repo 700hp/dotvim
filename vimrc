@@ -130,8 +130,9 @@ if has("autocmd")
     autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
     autocmd BufNewFile *.py :0r ~/.vim/templates/template.py | :call cursor(4,1)
     autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make
+    autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 
-	autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+	"autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
     autocmd! bufwritepost .vimrc source $MYVIMRC
     "au BufNewFile,BufRead *.cpp set syntax=cpp11
@@ -232,3 +233,16 @@ let g:lightline = {
       \ }
 nmap <leader>e :EasyBufferToggle<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+
+function! CapKeywords()
+	redir => lst
+	silent syntax list sqlKeyword sqlStatement
+	redir END
+	"for i in split(lst)[6:]
+	for i in split(lst)
+		:exe '%s/\<' . i . '\>/' . toupper(i) . '/ge'
+	endfor
+endfunction
+
+nnoremap <leader>h :call CapKeywords()<CR>
