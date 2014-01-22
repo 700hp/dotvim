@@ -44,6 +44,7 @@ set fileencodings=utf-8,cp1251
 set wildmode=list:longest,full
 set wildmenu
 set wildignore+=.hg,.git,.svn
+set lazyredraw
 
 set incsearch
 set hlsearch
@@ -51,6 +52,8 @@ set ignorecase
 set smartcase
 set nu
 set foldmethod=syntax
+set foldlevelstart=10
+set foldnestmax=10
 set completeopt=menu,menuone
 set pumheight=20
 
@@ -93,6 +96,7 @@ nnoremap <Space> za
 
 nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
+nmap <leader>u :GundoToggle()<CR>
 
 function! s:insert_gates()
     let gname = substitute(toupper(expand("%:t")), "\\.", "_", "g")
@@ -131,6 +135,7 @@ if has("autocmd")
     autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
     autocmd BufNewFile *.py :0r ~/.vim/templates/template.py | :call cursor(4,1)
     autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make
+    autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 
 	"autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
@@ -165,6 +170,15 @@ function! FileSize()
         return (bytes / 1024) . "K"
     endif
 endfunction
+
+if getfsize(expand("%:p")) > 100 * 1024
+	set ttyfast 
+	set ttyscroll=3
+	set lazyredraw 
+	set synmaxcol=128
+elseif getfsize(expand("%:p")) > 500 * 1024 
+	syntax off
+endif
 
 function! CurDir()
     return expand('%:p:h:t')
@@ -225,3 +239,16 @@ let g:lightline = {
             \ }
 nmap <leader>e :EasyBufferToggle<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+
+function! CapKeywords()
+	redir => lst
+	silent syntax list sqlKeyword sqlStatement
+	redir END
+	"for i in split(lst)[6:]
+	for i in split(lst)
+		:exe '%s/\<' . i . '\>/' . toupper(i) . '/ge'
+	endfor
+endfunction
+
+nnoremap <leader>h :call CapKeywords()<CR>
