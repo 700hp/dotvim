@@ -4,6 +4,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'sjl/badwolf'
 Bundle 'sjl/gundo.vim'
 Bundle 'LaTeX-Box'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
@@ -103,7 +104,7 @@ function! s:insert_gates()
     normal! ki
 endfunction
 
-set ts=4 sts=4 sw=4 noet
+set ts=4 sts=4 sw=4 et
 
 if has("autocmd")
     au FileType tex exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
@@ -131,7 +132,7 @@ if has("autocmd")
     autocmd BufNewFile *.py :0r ~/.vim/templates/template.py | :call cursor(4,1)
     autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make
 
-	autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+	"autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
 
     autocmd! bufwritepost .vimrc source $MYVIMRC
     "au BufNewFile,BufRead *.cpp set syntax=cpp11
@@ -175,9 +176,10 @@ set tags+=~/.vim/tags/gl
 map <F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 if has('gui_running')
-    set background=light
+    set background=dark
     set guioptions=
-    set guifont=Droid\ Sans\ Mono\ 13
+    "set guifont=Droid\ Sans\ Mono\ 13
+    set guifont=Inconsolata\ 16
     colorscheme solarized
 else
     set t_Co=256
@@ -203,23 +205,23 @@ set clipboard=unnamedplus
 nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ },
-      \ 'separator': { 'left': '>', 'right': '<' },
-      \ 'subseparator': { 'left': '|>', 'right': '<|' }
-      \ }
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+            \ },
+            \ 'component': {
+            \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+            \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+            \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+            \ },
+            \ 'component_visible_condition': {
+            \   'readonly': '(&filetype!="help"&& &readonly)',
+            \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+            \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+            \ },
+            \ 'separator': { 'left': '>', 'right': '<' },
+            \ 'subseparator': { 'left': '|>', 'right': '<|' }
+            \ }
 nmap <leader>e :EasyBufferToggle<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
