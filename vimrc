@@ -43,6 +43,7 @@ set fileencodings=utf-8,cp1251
 set wildmode=list:longest,full
 set wildmenu
 set wildignore+=.hg,.git,.svn
+set lazyredraw
 
 set incsearch
 set hlsearch
@@ -50,6 +51,8 @@ set ignorecase
 set smartcase
 set nu
 set foldmethod=syntax
+set foldlevelstart=10
+set foldnestmax=10
 set completeopt=menu,menuone
 set pumheight=20
 
@@ -92,6 +95,7 @@ nnoremap <Space> za
 
 nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
+nmap <leader>u :GundoToggle()<CR>
 
 function! s:insert_gates()
     let gname = substitute(toupper(expand("%:t")), "\\.", "_", "g")
