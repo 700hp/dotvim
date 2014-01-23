@@ -65,17 +65,19 @@ syntax enable
 let g:LatexBox_latexmk_options = "-pvc -pdfps"
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 let g:clang_user_options='|| exit 0'
+let g:solarized_termcolors=256
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let mapleader = ","
 
 set mouse=
 function! ToggleMouse()
-if &mouse == 'a'
-   set mouse=
-   echo "Mouse usage disabled"
-else
-    set mouse=a
-    echo "Mouse usage enabled"
-endif
+    if &mouse == 'a'
+        set mouse=
+        echo "Mouse usage disabled"
+    else
+        set mouse=a
+        echo "Mouse usage enabled"
+    endif
 endfunction
 nnoremap <leader>m :call ToggleMouse()<CR>
 
@@ -94,10 +96,10 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <Space> za
 
 set ts=4 sts=4 sw=4 et
-nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
+nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc> " calculator
 nmap <leader>e :EasyBufferToggle<CR>
 nmap <leader>t :TagbarToggle<CR><C-w><C-w>
-nmap <leader>u :GundoToggle()<CR>
+nmap <leader>u :GundoToggle<CR>
 nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
 
@@ -109,31 +111,14 @@ if has("autocmd")
     autocmd! bufwritepost .vimrc source $MYVIMRC
 endif
 
-if getfsize(expand("%:p")) > 100 * 1024
-	set ttyfast 
-	set ttyscroll=3
-	set lazyredraw 
-	set synmaxcol=128
-elseif getfsize(expand("%:p")) > 500 * 1024 
-	syntax off
-endif
-
 set tags+=~/.vim/tags/cpp
 set tags+=~/.vim/tags/gl
 " build tags of your own project with F12
 map <F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
-if has('gui_running')
-    set background=dark
-    set guioptions=
-    set guifont=Inconsolata\ 16
-    colorscheme solarized
-else
-    set t_Co=256
-    set background=light
-    let g:solarized_termcolors=256
-    colorscheme solarized
-endif
+set t_Co=256
+set background=light
+colorscheme solarized
 
 if has("cscope")
     set csprg=/usr/bin/cscope
@@ -151,20 +136,87 @@ endif
 let g:lightline = {
             \ 'colorscheme': 'wombat',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+            \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+            \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
             \ },
-            \ 'component': {
-            \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-            \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-            \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+            \ 'component_function': {
+            \   'fugitive': 'MyFugitive',
+            \   'filename': 'MyFilename',
+            \   'fileformat': 'MyFileformat',
+            \   'filetype': 'MyFiletype',
+            \   'fileencoding': 'MyFileencoding',
+            \   'mode': 'MyMode',
             \ },
-            \ 'component_visible_condition': {
-            \   'readonly': '(&filetype!="help"&& &readonly)',
-            \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-            \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+            \ 'component_expand': {
+            \   'syntastic': 'SyntasticStatuslineFlag',
             \ },
-            \ 'separator': { 'left': '▶', 'right': '◀' },
-            \ 'subseparator': { 'left': '▷', 'right': '◁' }
+            \ 'component_type': {
+            \   'syntastic': 'error',
+            \ },
+            \ 'subseparator': { 'left': '|', 'right': '|' }
             \ }
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+function! MyModified()
+    return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+    return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! MyFilename()
+    let fname = expand('%:t')
+    return fname == '__Tagbar__' ? g:lightline.fname :
+                \ fname =~ '__Gundo' ? '' :
+                \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+                \ ('' != fname ? fname : '[No Name]') .
+                \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+    try
+        if expand('%:t') !~? 'Tagbar\|Gundo' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+            let mark = ''  " edit here for cool mark
+            let _ = fugitive#head()
+            return strlen(_) ? mark._ : ''
+        endif
+    catch
+    endtry
+    return ''
+endfunction
+
+function! MyFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+    let fname = expand('%:t')
+    return fname == '__Tagbar__' ? 'Tagbar' :
+                \ fname == '__Gundo__' ? 'Gundo' :
+                \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+                \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
+    return lightline#statusline(0)
+endfunction
+
+augroup AutoSyntastic
+    autocmd!
+    autocmd BufWritePost *.c,*.cpp call s:syntastic()
+augroup END
+function! s:syntastic()
+    SyntasticCheck
+    call lightline#update()
+endfunction
