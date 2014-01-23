@@ -9,5 +9,4 @@ setlocal shiftwidth=2
 setlocal textwidth=80
 setlocal expandtab
 setlocal smarttab
-:0r ~/.vim/templates/template.html | :call cursor(5,12) "| startinsert
-  "  autocmd BufNewFile *.html :0r ~/.vim/templates/template.html | :call cursor(5,12) "| startinsert
+autocmd BufNewFile *.html :0r ~/.vim/templates/template.html | :call cursor(5,12) "| startinsert

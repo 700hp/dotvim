@@ -9,4 +9,4 @@ setlocal shiftwidth=8
 setlocal textwidth=80
 setlocal noexpandtab
 setlocal smarttab
-:0r ~/.vim/templates/template.make
+autocmd BufNewFile {makefile,Makefile} :0r ~/.vim/templates/template.make

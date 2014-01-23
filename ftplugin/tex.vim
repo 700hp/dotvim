@@ -10,4 +10,4 @@ setlocal textwidth=80
 setlocal expandtab
 setlocal smarttab
 
-exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
+autocmd FileType tex exec("setlocal dictionary+=".$HOME."/.vim/dictionaries/".expand('<amatch>'))
