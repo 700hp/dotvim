@@ -9,4 +9,5 @@ setlocal shiftwidth=4
 setlocal textwidth=80
 setlocal expandtab
 setlocal smarttab
-nnoremap K :Man <cword><CR>
+setlocal keywordprg=help
+nnoremap K :help <C-R><C-W><CR>

@@ -91,7 +91,6 @@ map <Leader>r :call Replace()<CR>
 nnoremap <leader>a :%s//<left>
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-nnoremap K :Man <cword><CR>
 nnoremap <Space> za
 
 set ts=4 sts=4 sw=4 et
