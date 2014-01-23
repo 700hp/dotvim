@@ -13,7 +13,6 @@ Bundle 'itchyny/lightline.vim'
 Bundle 'vim-scripts/molokai'
 Bundle 'wikitopian/hardmode.git'
 Bundle 'altercation/vim-colors-solarized.git'
-Bundle 'scrooloose/nerdtree.git'
 Bundle 'scrooloose/nerdcommenter.git'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim.git'
@@ -23,6 +22,7 @@ Bundle 'tpope/vim-fugitive.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tpope/vim-repeat.git'
+Bundle 'tpope/vim-vinegar.git'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic.git'
 
@@ -109,14 +109,6 @@ if has("autocmd")
     set complete+=k
     autocmd! bufwritepost .vimrc source $MYVIMRC
 endif
-
-nmap <Bs> :NERDTreeToggle<CR>
-nmap <Home> :NERDTree .<CR>
-let NERDTreeChDirMode=2
-let NERDTreeShowBookmarks=0
-let NERDTreeQuitOnOpen=1
-let NERDTreeShowHidden=0
-let NERDTreeKeepInNewTab=0
 
 if getfsize(expand("%:p")) > 100 * 1024
 	set ttyfast 
