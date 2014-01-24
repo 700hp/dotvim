@@ -92,16 +92,20 @@ endfunction
 map <Leader>r :call Replace()<CR>
 nnoremap <leader>a :%s//<left>
 
-nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-nnoremap <Space> za
-
-set ts=4 sts=4 sw=4 et
-nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc> " calculator
+nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
 nmap <leader>e :EasyBufferToggle<CR>
 nmap <leader>t :TagbarToggle<CR><C-w><C-w>
 nmap <leader>u :GundoToggle<CR>
+nnoremap <Space> za
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
+
+" Global settings, can be override in ftplugin
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
 
 set clipboard=unnamedplus
 set laststatus=2
