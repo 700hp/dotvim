@@ -3,19 +3,19 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'gmarik/vundle'
-Bundle 'Raimondi/delimitMate.git'
-Bundle 'sjl/badwolf'
-Bundle 'sjl/gundo.vim'
+Bundle 'itchyny/lightline.vim'
 Bundle 'LaTeX-Box'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'itchyny/lightline.vim'
-Bundle 'vim-scripts/molokai'
-Bundle 'wikitopian/hardmode.git'
-Bundle 'altercation/vim-colors-solarized.git'
-Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim.git'
+Bundle 'Raimondi/delimitMate.git'
+Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'scrooloose/syntastic.git'
+Bundle 'sjl/badwolf'
+Bundle 'sjl/gundo.vim'
 Bundle 'troydm/easybuffer.vim.git'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-fugitive.git'
@@ -23,8 +23,9 @@ Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'tpope/vim-vinegar.git'
+Bundle 'vim-scripts/molokai'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'scrooloose/syntastic.git'
+Bundle 'wikitopian/hardmode.git'
 
 nmap <C-Up> [e
 nmap <C-Down> ]e
