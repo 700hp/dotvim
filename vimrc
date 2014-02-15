@@ -68,7 +68,9 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 let g:clang_user_options='|| exit 0'
 let g:solarized_termcolors=256
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_always_populate_location_list = 1
 let mapleader = ","
+let g:delimitMate_expand_cr = 2
 
 set mouse=
 function! ToggleMouse()

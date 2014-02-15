@@ -51,7 +51,7 @@ endfunction
     "normal! ki
 
 function! New_Class()
-   let class_name = expand("%:r")
+   let class_name = expand("%:t:r")
    let file_type = expand("%:e")
    let l_class_name = tolower(class_name)
    let u_class_name = toupper(class_name)
