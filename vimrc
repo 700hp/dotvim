@@ -8,6 +8,7 @@ Bundle 'gmarik/vundle'
 Bundle 'itchyny/lightline.vim'
 Bundle 'LaTeX-Box'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim.git'
@@ -23,6 +24,7 @@ Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'tpope/vim-vinegar.git'
+Bundle 'vim-scripts/Conque-GDB'
 Bundle 'vim-scripts/molokai'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'wikitopian/hardmode.git'
@@ -62,6 +64,18 @@ if version >= 703
     set colorcolumn=80
 end
 syntax enable
+if version >= 700
+    set undolevels=128
+    set undodir=~/.vim/undodir/
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+end
+set backup
+set backupdir=/var/tmp,/tmp
+set backupskip=/tmp/*
+set directory=/var/tmp,/tmp
+set writebackup
 
 let g:LatexBox_latexmk_options = "-pvc -pdfps"
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
