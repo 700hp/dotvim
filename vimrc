@@ -29,11 +29,6 @@ Bundle 'vim-scripts/molokai'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'wikitopian/hardmode.git'
 
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
-
 filetype plugin indent on
 runtime ftplugin/man.vim
 
@@ -57,7 +52,7 @@ set nu
 set foldmethod=syntax
 set foldlevelstart=10
 set foldnestmax=10
-set completeopt=menu,menuone
+set completeopt=preview,menu,menuone
 set pumheight=20
 
 if version >= 703
@@ -83,6 +78,8 @@ let g:clang_user_options='|| exit 0'
 let g:solarized_termcolors=256
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_always_populate_location_list = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 let mapleader = ","
 let g:delimitMate_expand_cr = 2
 
@@ -109,13 +106,18 @@ endfunction
 map <Leader>r :call Replace()<CR>
 nnoremap <leader>a :%s//<left>
 
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
 nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
 nmap <leader>e :EasyBufferToggle<CR>
 nmap <leader>t :TagbarToggle<CR><C-w><C-w>
 nmap <leader>u :GundoToggle<CR>
 nnoremap <Space> za
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
+nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
 
 " Global settings, can be override in ftplugin
