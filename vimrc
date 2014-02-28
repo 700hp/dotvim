@@ -8,6 +8,7 @@ Bundle 'gmarik/vundle'
 Bundle 'itchyny/lightline.vim'
 Bundle 'LaTeX-Box'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim.git'
@@ -23,14 +24,10 @@ Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-unimpaired.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'tpope/vim-vinegar.git'
+Bundle 'vim-scripts/Conque-GDB'
 Bundle 'vim-scripts/molokai'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'wikitopian/hardmode.git'
-
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
 
 filetype plugin indent on
 runtime ftplugin/man.vim
@@ -55,20 +52,36 @@ set nu
 set foldmethod=syntax
 set foldlevelstart=10
 set foldnestmax=10
-set completeopt=menu,menuone
+set completeopt=preview,menu,menuone
 set pumheight=20
 
 if version >= 703
     set colorcolumn=80
 end
 syntax enable
+if version >= 700
+    set undolevels=128
+    set undodir=~/.vim/undodir/
+    set undofile
+    set undolevels=1000
+    set undoreload=10000
+end
+set backup
+set backupdir=/var/tmp,/tmp
+set backupskip=/tmp/*
+set directory=/var/tmp,/tmp
+set writebackup
 
 let g:LatexBox_latexmk_options = "-pvc -pdfps"
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 let g:clang_user_options='|| exit 0'
 let g:solarized_termcolors=256
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_always_populate_location_list = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 let mapleader = ","
+let g:delimitMate_expand_cr = 2
 
 set mouse=
 function! ToggleMouse()
@@ -93,6 +106,11 @@ endfunction
 map <Leader>r :call Replace()<CR>
 nnoremap <leader>a :%s//<left>
 
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
 nmap <leader>g :Ack <cword><CR>
 nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
 nmap <leader>e :EasyBufferToggle<CR>
@@ -100,7 +118,7 @@ nmap <leader>t :TagbarToggle<CR><C-w><C-w>
 nmap <leader>u :GundoToggle<CR>
 nnoremap <Space> za
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-nmap <silent> <leader>s :set spelllang=ru<CR>:set spell!<CR>
+nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
 
 " Global settings, can be override in ftplugin

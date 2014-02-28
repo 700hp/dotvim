@@ -3,6 +3,7 @@ if exists("b:did_ftplugin")
 endif
 let b:did_ftplugin = 1
 
+let g:pymode_lint_write = 0
 setlocal tabstop=4
 setlocal softtabstop=4
 setlocal shiftwidth=4
