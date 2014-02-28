@@ -93,6 +93,7 @@ endfunction
 map <Leader>r :call Replace()<CR>
 nnoremap <leader>a :%s//<left>
 
+nmap <leader>g :Ack <cword><CR>
 nmap <leader>q 0yt=A<C-r>=<C-r>"<CR><Esc>
 nmap <leader>e :EasyBufferToggle<CR>
 nmap <leader>t :TagbarToggle<CR><C-w><C-w>
