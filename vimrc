@@ -4,6 +4,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'ervandew/ag'
 Bundle 'gmarik/vundle'
 Bundle 'itchyny/lightline.vim'
 Bundle 'LaTeX-Box'
