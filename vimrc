@@ -3,6 +3,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+Bundle 'airblade/vim-gitgutter'
 Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'ervandew/ag'
 Bundle 'gmarik/vundle'
