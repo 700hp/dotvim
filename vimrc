@@ -5,7 +5,9 @@ call vundle#rc()
 
 Bundle 'airblade/vim-gitgutter'
 Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'bhilburn/kernel-coding-style'
 Bundle 'ervandew/ag'
+Bundle 'fatih/vim-go'
 Bundle 'gmarik/vundle'
 Bundle 'itchyny/lightline.vim'
 Bundle 'LaTeX-Box'
@@ -122,6 +124,7 @@ nnoremap <Space> za
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nmap <silent> <leader>s :set spell!<CR>
 nmap <silent> <leader>l :set list!<CR>
+nnoremap <silent> <leader>k :SetLinuxFormatting<CR><CR>
 
 " Global settings, can be override in ftplugin
 set tabstop=4

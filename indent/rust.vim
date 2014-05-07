@@ -30,7 +30,7 @@ endif
 
 " Come here when loading the script the first time.
 
-function s:get_line_trimmed(lnum)
+function! s:get_line_trimmed(lnum)
 	" Get the line and remove a trailing comment.
 	" Use syntax highlighting attributes when possible.
 	" NOTE: this is not accurate; /* */ or a line continuation could trick it
@@ -58,6 +58,20 @@ function s:get_line_trimmed(lnum)
 		" Sorry, this is not complete, nor fully correct (e.g. string "//").
 		" Such is life.
 		return substitute(line, "\s*//.*$", "", "")
+	endif
+endfunction
+
+function! s:is_string_comment(lnum, col)
+	if has('syntax_items')
+		for id in synstack(a:lnum, a:col)
+			let synname = synIDattr(id, "name")
+			if synname == "rustString" || synname =~ "^rustComment"
+				return 1
+			endif
+		endfor
+	else
+		" without syntax, let's not even try
+		return 0
 	endif
 endfunction
 
@@ -105,6 +119,7 @@ function GetRustIndent(lnum)
 	if prevline[len(prevline) - 1] == ","
 				\ && s:get_line_trimmed(a:lnum) !~ "^\\s*[\\[\\]{}]"
 				\ && prevline !~ "^\\s*fn\\s"
+				\ && prevline !~ "([^()]\\+,$"
 		" Oh ho! The previous line ended in a comma! I bet cindent will try to
 		" take this too far... For now, let's normally use the previous line's
 		" indent.
@@ -118,6 +133,16 @@ function GetRustIndent(lnum)
 		"
 		" fn foo(baz: Baz,
 		"        baz: Baz) // <-- cindent gets this right by itself
+		"
+		" Another case is similar to the previous, except calling a function
+		" instead of defining it, or any conditional expression that leaves
+		" an open paren:
+		"
+		" foo(baz,
+		"     baz);
+		"
+		" if baz && (foo ||
+		"            bar) {
 		"
 		" There are probably other cases where we don't want to do this as
 		" well. Add them as needed.
@@ -141,8 +166,10 @@ function GetRustIndent(lnum)
 	" column zero)
 
 	call cursor(a:lnum, 1)
-	if searchpair('{\|(', '', '}\|)', 'nbW') == 0
-		if searchpair('\[', '', '\]', 'nbW') == 0
+	if searchpair('{\|(', '', '}\|)', 'nbW'
+				\ 's:is_string_comment(line("."), col("."))') == 0
+		if searchpair('\[', '', '\]', 'nbW',
+					\ 's:is_string_comment(line("."), col("."))') == 0
 			" Global scope, should be zero
 			return 0
 		else
